@@ -1,4 +1,4 @@
-import { IMessageTopic, IObjective, IStakeholder, IInjectGroup, IInject, IPerson, MessageType } from '.';
+import { IMessageTopic, IObjective, IStakeholder, IInjectGroup, IInject, IPerson, MessageType, IOrganisation, IResource } from '.';
 import { IAsset } from './asset';
 
 export interface ITrialOverview {
@@ -44,6 +44,10 @@ export interface ITrial extends ITrialOverview {
   stakeholders: IStakeholder[];
   /** Objectives that need to be satisfied by the scenario */
   objectives: IObjective[];
+  /** Organisations that are created to the scenario */
+  organisations: IOrganisation[];
+  /** Resources that are created to the scenario */
+  resources: IResource[];
   /** The actual messages that encompass the scenario */
   injects: Array<IInject | IInjectGroup>;
   /** The actual message types that will be used */

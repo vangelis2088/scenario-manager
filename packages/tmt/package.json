@@ -35,7 +35,7 @@
     "rfc6902": "^5.0.1",
     "slimdown-js": "^0.7.1",
     "socket.io-client": "4.5.2",
-    "trial-manager-models": "file:../models"
+    "trial-manager-models": "file:.yalc/trial-manager-models"
   },
   "devDependencies": {
     "@types/geojson": "^7946.0.10",

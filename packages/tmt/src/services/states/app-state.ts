@@ -25,6 +25,8 @@ import {
   uniqueId,
   UserRole,
   ISystemLog,
+  IOrganisation,
+  IResource
 } from 'trial-manager-models';
 import { MessageScope } from '../../components/messages';
 import { arrayMove, getInjects, getInject, isScenario, validateInjects } from '../../utils';
@@ -89,6 +91,12 @@ export interface IApp extends IActiveTrial {
   messageId: string;
   /** all logs that were received through kafka */
   logs: Array<ISystemLog>;
+  /** Currently selected organisation ID */
+  organisationId: string;
+  organisations: IOrganisation[];
+  /** Currently selected resource ID */
+  resourceId: string;
+  resources: IResource[];
 }
 
 export interface IExe extends IActiveTrial {
@@ -143,6 +151,16 @@ export interface IAppStateActions {
   createAsset: (asset: IAsset, files?: FileList) => Promise<void>;
   updateAsset: (asset: IAsset, files?: FileList) => Promise<void>;
   deleteAsset: (asset: IAsset) => Promise<void>;
+
+  selectOrganisation: (organisation: IOrganisation) => void;
+  createOrganisation: (organisation: IOrganisation) => Promise<void>;
+  updateOrganisation: (organisation: IOrganisation) => Promise<void>;
+  deleteOrganisation: (organisation: IOrganisation) => Promise<void>;
+
+  selectResource: (resource: IResource) => void;
+  createResource: (resource: IResource) => Promise<void>;
+  updateResource: (resource: IResource) => Promise<void>;
+  deleteResource: (resource: IResource) => Promise<void>;
 
   selectScenario: (scenario: IInject | string) => void;
   loginUser: (userId: string) => void;
@@ -240,6 +258,10 @@ export const appStateMgmt = {
       userId: '',
       assetId: -1,
       assets: [],
+      organisationId: '',
+      organisations: [],
+      resourceId: '',
+      resources: [],
       treeState: {},
       owner: 'TB_TrialMgmt',
       scenarioId: '',
@@ -429,6 +451,7 @@ export const appStateMgmt = {
             },
           ],
           objectives: [{ id: uniqueId(), title: 'Fix gap 1' }],
+          organisations: [],
           messageTopics: [],
           selectedMessageTypes: [
             {
@@ -682,6 +705,64 @@ export const appStateMgmt = {
         const updated = assets.filter((a) => a.id !== asset.id);
         await assetsSvc.del(asset.id);
         update({ app: { assets: updated } });
+      },
+
+      selectOrganisation: (organisation: IOrganisation) => update({ app: { organisationId: organisation.id } }),
+      createOrganisation: async (organisation: IOrganisation) => {
+        console.log(organisation.name);
+        const { trial } = states().app;
+        const oldTrial = deepCopy(trial);
+        if (!trial.organisations) {
+          trial.organisations = [];
+        }
+        trial.organisations.push(organisation);
+        await trialSvc.patch(trial, oldTrial);
+        update({ app: { organisationId: organisation.id, trial } });
+      },
+      updateOrganisation: async (organisation: IOrganisation) => {
+        const { trial } = states().app;
+        const oldTrial = deepCopy(trial);
+        trial.organisations = trial.organisations.map((s) => (s.id === organisation.id ? deepCopy(organisation) : s));
+        await trialSvc.patch(trial, oldTrial);
+        update({ app: { organisationId: organisation.id, trial } });
+      },
+      deleteOrganisation: async (organisation: IOrganisation) => {
+        //const { organisations } = states().app;
+        //const updated = organisations.filter((a) => a.id !== organisation.id);
+        //await assetsSvc.del(organisation.id);
+        //update({ app: { organisations: updated } });
+
+        const { trial } = states().app;
+        const oldTrial = deepCopy(trial);
+        trial.organisations = trial.organisations.filter((s) => s.id !== organisation.id);
+        await trialSvc.patch(trial, oldTrial);
+        update({ app: { organisationId: '', trial } });
+      },
+
+      selectResource: (resource: IResource) => update({ app: { resourceId: resource.id } }),
+      createResource: async (resource: IResource) => {
+        const { trial } = states().app;
+        const oldTrial = deepCopy(trial);
+        if (!trial.resources) {
+          trial.resources = [];
+        }
+        trial.resources.push(resource);
+        await trialSvc.patch(trial, oldTrial);
+        update({ app: { resourceId: resource.id, trial } });
+      },
+      updateResource: async (resource: IResource) => {
+        const { trial } = states().app;
+        const oldTrial = deepCopy(trial);
+        trial.resources = trial.resources.map((s) => (s.id === resource.id ? deepCopy(resource) : s));
+        await trialSvc.patch(trial, oldTrial);
+        update({ app: { resourceId: resource.id, trial } });
+      },
+      deleteResource: async (resource: IResource) => {
+        const { trial } = states().app;
+        const oldTrial = deepCopy(trial);
+        trial.resources = trial.resources.filter((s) => s.id !== resource.id);
+        await trialSvc.patch(trial, oldTrial);
+        update({ app: { resourceId: '', trial } });
       },
 
       selectStakeholder: (stakeholder: IStakeholder) => update({ app: { stakeholderId: stakeholder.id } }),

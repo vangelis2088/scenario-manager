@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "trial-manager-models": {
+      "signature": "9da812145e9dc96efd0453520926daa7",
+      "file": true,
+      "replaced": "file:../models"
+    }
+  }
+}

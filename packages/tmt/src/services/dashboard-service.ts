@@ -17,6 +17,8 @@ import {
   SessionTable,
   MessageConfigView,
   KafkaLogs,
+  OrganisationView,
+  ResourceView
 } from '../components';
 
 class DashboardService {
@@ -183,6 +185,22 @@ export const dashboardSvc: DashboardService = new DashboardService([
     visible: false,
     component: ObjectivesView,
     level: Dashboards.TRIAL,
+  },
+  {
+    id: Dashboards.ORGANISATION,
+    title: 'Organisation',
+    route: '/edit/organisation',
+    visible: false,
+    component: OrganisationView,
+    level: Dashboards.SETTINGS,
+  },
+  {
+    id: Dashboards.RESOURCE,
+    title: 'Resource',
+    route: '/edit/resource',
+    visible: false,
+    component: ResourceView,
+    level: Dashboards.SETTINGS,
   },
   {
     id: Dashboards.SCENARIOS,

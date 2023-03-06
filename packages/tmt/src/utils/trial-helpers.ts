@@ -66,6 +66,26 @@ export const getObjectives = (trial?: ITrial, filter?: string) => {
     : trial.objectives;
 };
 
+/** Get all organisations (or filter by name) */
+export const getOrganisations = (trial?: ITrial, filter?: string) => {
+  if (!trial || !trial.organisations) {
+    return [];
+  }
+  return filter
+    ? trial.organisations.filter((s) => s.name && s.name.toLowerCase().indexOf(filter.toLowerCase()) >= 0)
+    : trial.organisations;
+};
+
+/** Get all organisations (or filter by name) */
+export const getResources = (trial?: ITrial, filter?: string) => {
+  if (!trial || !trial.resources) {
+    return [];
+  }
+  return filter
+    ? trial.resources.filter((s) => s.name && s.name.toLowerCase().indexOf(filter.toLowerCase()) >= 0)
+    : trial.resources;
+};
+
 /** Get all injects (or filter by name) */
 export const getInjects = (trial?: ITrial, filter?: string) => {
   if (!trial || !trial.injects) {

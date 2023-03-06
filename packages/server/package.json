@@ -39,7 +39,7 @@
     "socket.io": "^4.5.2",
     "sqlite3": "^5.1.1",
     "swagger-ui-express": "^4.5.0",
-    "trial-manager-models": "file:../models"
+    "trial-manager-models": "file:.yalc/trial-manager-models"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.1.4",

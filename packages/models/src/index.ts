@@ -29,6 +29,8 @@ export * from './gui-template';
 export * from './send_file-message';
 export * from './send_message-message';
 export * from './system-log';
+export * from './organisation';
+export * from './resource';
 export {
   ILargeDataUpdate,
   DataType,

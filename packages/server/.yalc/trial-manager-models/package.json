@@ -1,0 +1,26 @@
+{
+  "name": "trial-manager-models",
+  "private": true,
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "version": "0.0.1",
+  "description": "Trial manager interfaces.",
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "start": "tsc -w",
+    "dev": "tsc -w",
+    "build": "tsc -b"
+  },
+  "keywords": [],
+  "author": "Erik Vullings <erik.vullings@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DRIVER-EU/scenario-manager.git"
+  },
+  "dependencies": {
+    "@types/geojson": "^7946.0.10",
+    "test-bed-schemas": "^0.4.0"
+  },
+  "yalcSig": "a51b1d7528d478aed23b1b8cf12af757"
+}
